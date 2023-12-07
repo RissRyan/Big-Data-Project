@@ -30,7 +30,7 @@ def generate_bar_chart(airport_code, feature):
     plt.tight_layout()
     plt.show()
 
-generate_bar_chart('KDWH', 'wind_direction')
+generate_bar_chart('KDWH', 'wind_speed')
 
 # ---------------------------------------------------------------------------
 # Top X of *feature for *airport
@@ -153,12 +153,13 @@ def precipitation_distribution_by_month(airport_code):
     grouped_data = data_filtered.groupby(['month', 'precipitation_category']).size().unstack().fillna(0)
     
     # Creating stacked bar charts
-    plt.figure(figsize=(12, 8))
-    grouped_data.plot(kind='bar', stacked=True)
-    plt.xlabel('Month')
-    plt.ylabel('Count')
-    plt.title(f'Precipitation Distribution by Month for {airport_code}')
-    plt.legend(title='Precipitation Category')
+    fig, ax = plt.subplots(figsize=(12, 8))
+    
+    grouped_data.plot(kind='bar', stacked=True, ax=ax)
+    ax.set_xlabel('Month')
+    ax.set_ylabel('Count')
+    ax.set_title(f'Precipitation Distribution by Month for {airport_code}')
+    ax.legend(title='Precipitation Category')
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
@@ -209,7 +210,7 @@ def sky_condition_distribution_by_month(airport_code):
     plt.tight_layout()
     plt.show()
 
-sky_condition_distribution_by_month('KJFK')
+## sky_condition_distribution_by_month('KJFK')
 
 # Double Distribution of Sky Condition for a specific airport for specific month
 def sky_condition_distribution_for_month(airport_code, month):
@@ -233,13 +234,13 @@ def sky_condition_distribution_for_month(airport_code, month):
     axes[0].set_xlabel('Sky Condition 1')
     axes[0].set_ylabel('Count')
     axes[0].set_title(f'Sky Condition 1 Distribution for {airport_code} in {month}')
-    axes[0].tick_params(axis='x', rotation=45)
+    axes[0].tick_params(axis='x', rotation=90)
     
     grouped_data_2.plot(kind='bar', ax=axes[1])
     axes[1].set_xlabel('Sky Condition 2')
     axes[1].set_ylabel('Count')
     axes[1].set_title(f'Sky Condition 2 Distribution for {airport_code} in {month}')
-    axes[1].tick_params(axis='x', rotation=45)
+    axes[1].tick_params(axis='x', rotation=90)
     
     plt.tight_layout()
     plt.show()
